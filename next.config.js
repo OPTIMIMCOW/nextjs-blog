@@ -7,7 +7,6 @@ const nextConfig = {
 
 module.exports = {
     env: {
-        customKey: 'AIzaSyBS2UZiPynH170OCxcAZ64KdC9fP26CUoo',
-        googleApiKey: 'AIzaSyBS2UZiPynH170OCxcAZ64KdC9fP26CUoo'
+        googleApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     },
 }
