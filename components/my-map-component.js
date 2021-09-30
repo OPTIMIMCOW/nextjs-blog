@@ -12,12 +12,9 @@ function Map({ isMarkerShown }) {
 		<GoogleMap
 			defaultZoom={8}
 			defaultCenter={{ lat: -34, lng: 150 }}
-			onDragEnd={ console.log(`dragged`)}
-			onClick={ console.log(`clicked`)}
 		>
 			{isMarkerShown && <Marker
 				position={{ lat: -34.397, lng: 150.644 }}
-				onClick={() => setTest("marker clicked")}
 
 			/>}
 		</GoogleMap>
