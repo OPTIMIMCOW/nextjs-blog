@@ -1,38 +1,35 @@
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
-import { compose, withProps } from "recompose";
+import { useLoadScript, InfoWindow, GoogleMap, Marker } from "@react-google-maps/api";
+import { formatRelative } from "date-fns";
 import { useState } from "react";
 
-function testFunction() {
-	console.log(`testfunction`);
-}
+const libraries = ["places"];
 
-function Map({ isMarkerShown }) {
-	const [test, setTest] = useState("");
+const containerStyle = {
+	width: '400px',
+	height: '400px'
+};
+
+const center = {
+	lat: 43.65,
+	lng: -70.383,
+};
+
+export default function Map() {
+
+	const { isLoaded, loadError } = useLoadScript({
+		googleMapsApiKey: process.env.googleApiKey,
+		libraries,
+	});
+
+	if (loadError) return "error loading maps";
+	if (!isLoaded) return "loading map";
+
 	return (
 		<GoogleMap
-			defaultZoom={8}
-			defaultCenter={{ lat: -34, lng: 150 }}
+			mapContainerStyle={containerStyle}
+			zoom={8}
+			center={center}
 		>
-			{isMarkerShown && <Marker
-				position={{ lat: -34.397, lng: 150.644 }}
-
-			/>}
 		</GoogleMap>
 	);
 }
-
-//console.log(process.env.googleApiKey);
-
-//console.log(Map.getBounds());
-
-const MyMapComponent = compose(
-	withProps({
-		googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=" + process.env.googleApiKey,
-		loadingElement: <div style={{ width: `500px`, height: `500px` }} />,
-		containerElement: <div style={{ width: `500px`, height: `500px` }} />,
-		mapElement: <div style={{ width: `500px`, height: `500px` }} />,
-	}),
-	withScriptjs,
-	withGoogleMap)((Map));
-
-export default MyMapComponent;
